@@ -4,6 +4,8 @@ import { useState } from "react"
 import { Home, Users, Zap, Trophy, User, Plus, Minus, Gamepad2, Droplets } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
+import TokenCard from '@/components/tokencard'
+import LockHornsModal from '@/components/lockhornsmodal'
 
 export default function FanpoolApp() {
   const [showLockHornsModal, setShowLockHornsModal] = useState(false)
@@ -11,32 +13,34 @@ export default function FanpoolApp() {
   const [selectedTab, setSelectedTab] = useState<"BULL-RUN" | "FREE-RUN">("BULL-RUN")
   const [setTime, setSetTime] = useState(60)
   const [setAmount, setSetAmount] = useState(0.1)
+  const [selectedToken, setSelectedToken] = useState<string | null>(null)
 
   const tokens = [
-    { name: "SCLP", multiplier: "2.0x", change: "+0.91", color: "bg-gray-400", hasImage: false },
-    { name: "CETUS", multiplier: "1.4x", change: "+0.91", color: "bg-teal-400", hasImage: false },
-    { name: "BLUE", multiplier: "1.6x", change: "+0.91", color: "bg-white", hasImage: false },
-    { name: "HIPPO", multiplier: "1.3x", change: "+0.91", color: "bg-blue-400", hasImage: false },
-    { name: "LOFI", multiplier: "1.2x", change: "+0.91", color: "bg-blue-300", hasImage: false },
-    { name: "SSWP", multiplier: "1.2x", change: "+0.91", color: "bg-black", hasImage: false },
-    { name: "SUI", multiplier: "1.1x", change: "+0.91", color: "bg-blue-500", hasImage: false },
+    { symbol: "SCLP", icon: "/images/b.png", multiplier: "2.0x", change: "+0.91", isPositive: true, bgColor: "bg-gray-400" },
+    { symbol: "CETUS", icon: "", multiplier: "1.4x", change: "+0.91", isPositive: true, bgColor: "bg-teal-400" },
+    { symbol: "BLUE", icon: "", multiplier: "1.6x", change: "+0.91", isPositive: true, bgColor: "bg-white" },
+    { symbol: "HIPPO", icon: "/images/a.png", multiplier: "1.3x", change: "+0.91", isPositive: true, bgColor: "bg-blue-400" },
+    { symbol: "LOFI", icon: "/images/c.png", multiplier: "1.2x", change: "+0.91", isPositive: true, bgColor: "bg-blue-300" },
+    { symbol: "SSWP", icon: "", multiplier: "1.2x", change: "+0.91", isPositive: true, bgColor: "bg-black" },
+    { symbol: "SUI", icon: "", multiplier: "1.1x", change: "+0.91", isPositive: true, bgColor: "bg-blue-500" },
   ]
 
-  const tokenRows = [
-  [tokens[0]],           
+const tokenRows = [
+  [tokens[0]],
   [tokens[1], tokens[2]],
-  [tokens[3]],           
+  [tokens[3]],
   [tokens[4], tokens[5]],
-  [tokens[6]],          
+  [tokens[6]],
 ];
 
-  const handleTokenClick = (tokenName: string) => {
-    setShowLockHornsModal(true)
-    setModalType("free-run")
-  }
+const handleTokenClick = (tokenSymbol: string) => {
+  setSelectedToken(tokenSymbol)
+  setShowLockHornsModal(true)
+  setModalType("free-run")
+}
 
   const renderTokenIcon = (token: (typeof tokens)[0]) => {
-    switch (token.name) {
+    switch (token.symbol) {
       case "SCLP":
         return (
           <div className="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center">
@@ -82,7 +86,7 @@ export default function FanpoolApp() {
       default:
         return (
           <div className="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center">
-            <span className="text-xs font-bold text-black">{token.name}</span>
+            <span className="text-xs font-bold text-black">{token.symbol}</span>
           </div>
         )
     }
@@ -90,7 +94,6 @@ export default function FanpoolApp() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-
       {/* Header */}
       <div className="flex justify-between items-center px-4 py-3">
         <div className="flex items-center gap-2">
@@ -125,18 +128,18 @@ export default function FanpoolApp() {
           </Button>
         </div>
 
-        <div className="relative mb-6">
+        <div className="relative mb-6 w-full">
           {/* Curved Blue Banner */}
-          <div className="relative w-full h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] md:w-full mb-6">
-          <img
-          className="absolute inset-0 w-full h-full object-cover"
-          src="/images/Sui.png"
-          alt="Curved Blue Banner"
-          />
+          <div className="relative w-full h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] mb-6">
+            <img
+              className="absolute inset-0 w-full h-full object-cover"
+              src="/images/Sui.png"
+              alt="Curved Blue Banner"
+            />
           </div>
 
           {/* Green Token Grid with Vertical Stripes - Top Rounded */}
-          <div className="relative bg-gradient-to-b from-[#207400] to-[#1f6d00] p-6 mt-[-5vh] h-[45vh] rounded-top-[20px]">
+          <div className="relative bg-gradient-to-b from-[#207400] to-[#1f6d00] mt-[-5vh] h-[45vh] rounded-t-[20px]">
             {/* Vertical Stripes */}
             <div className="absolute inset-0 flex rounded-2xl overflow-hidden">
               {Array.from({ length: 8 }).map((_, i) => (
@@ -145,37 +148,37 @@ export default function FanpoolApp() {
             </div>
 
             {/* Token Grid */}
-            <div className="space-y-2 relative z-10 pt-2">
-  {tokenRows.map((row, rowIdx) => (
-    <div
-      key={rowIdx}
-      className={`flex ${row.length === 2 ? "justify-between" : "justify-center"} w-full`}
-    >
-      {row.map((token, colIdx) => (
-        <div
-          key={token.name}
-          className="relative flex flex-col items-center cursor-pointer"
-          onClick={() => handleTokenClick(token.name)}
-        >
-          {/* Change indicator */}
-          <div className="absolute -top-2 -left-2 bg-[#cf0000] text-white text-xs px-2 py-1 rounded-full z-20">
-            {token.change}
-          </div>
-          {/* Multiplier */}
-          <div className="absolute -top-2 -right-2 bg-black text-white text-xs px-2 py-1 rounded-full z-20">
-            {token.multiplier}
-          </div>
-          {/* Token Circle with Icon */}
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2 border-4 border-white shadow-lg relative z-10">
-            {renderTokenIcon(token)}
-          </div>
-          {/* Token Name */}
-          <span className="text-xs font-bold text-white mt-1">{token.name}</span>
-        </div>
-      ))}
-    </div>
-  ))}
-</div>
+            <div className={`space-y-4 relative z-10 h-full flex flex-col justify-center transition-all duration-300 ${showLockHornsModal ? "blur-sm pointer-events-none" : ""}`}>
+              {tokenRows.map((row, rowIdx) => (
+                <div
+                  key={rowIdx}
+                  className={`flex ${row.length === 2 ? "justify-between" : "justify-center"} w-full`}
+                >
+                  {row.map((token) => (
+                    <div
+                      key={token.symbol}
+                      onClick={() => handleTokenClick(token.symbol)}
+                      className="cursor-pointer"
+                    >
+                      <TokenCard token={token} />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            {/* Focused TokenCard (above blur) */}
+            {showLockHornsModal && selectedToken && (
+              <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                {tokenRows.flat().map(token =>
+                  token.symbol === selectedToken ? (
+                    <TokenCard
+                      key={token.symbol}
+                      token={token}
+                    />
+                  ) : null
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -227,152 +230,13 @@ export default function FanpoolApp() {
       </div>
 
       {/* Lock Horns Modal */}
-      <Dialog open={showLockHornsModal} onOpenChange={setShowLockHornsModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-sm mx-auto">
-          <div className="text-center p-6">
-            <div className="mb-4">
-              <Gamepad2 className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-              <h2 className="text-xl font-bold mb-4">LOCK HORNS</h2>
-            </div>
-
-            {/* Tabs */}
-            <div className="flex mb-6 bg-slate-700 rounded-lg p-1">
-              <button
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                  selectedTab === "BULL-RUN" ? "bg-slate-600 text-white" : "text-gray-400 hover:text-white"
-                }`}
-                onClick={() => setSelectedTab("BULL-RUN")}
-              >
-                BULL-RUN
-              </button>
-              <button
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                  selectedTab === "FREE-RUN" ? "bg-slate-600 text-white" : "text-gray-400 hover:text-white"
-                }`}
-                onClick={() => setSelectedTab("FREE-RUN")}
-              >
-                FREE-RUN
-              </button>
-            </div>
-
-            {selectedTab === "FREE-RUN" ? (
-              <>
-                <p className="text-sm text-gray-300 mb-6">
-                  SET A TIME TO START PLAYING. WE'LL FIND SOMEONE YOU CAN LOCK HORNS WITH. THE WINNER WILL GET 2
-                  TROPHIES
-                </p>
-
-                <div className="mb-6">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <span className="text-sm">WINNER GETS</span>
-                    <Trophy className="w-4 h-4 text-yellow-500" />
-                    <span className="text-yellow-500 font-bold">2</span>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm">SET TIME</span>
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        aria-label="Decrease time"
-                        onClick={() => setSetTime(Math.max(10, setTime - 10))}
-                        className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="font-bold text-lg">{setTime}s</span>
-                      <button
-                        type="button"
-                        aria-label="Increase time"
-                        onClick={() => setSetTime(setTime + 10)}
-                        className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-gray-300 mb-6">
-                  SET AN AMOUNT AND TIME TO START PLAYING. WE'LL FIND SOMEONE YOU CAN LOCK HORNS WITH.
-                </p>
-
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm">SET AMOUNT</span>
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        aria-label="Decrease time"
-                        onClick={() => setSetAmount(Math.max(0.1, setAmount - 0.1))}
-                        className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <div className="flex items-center gap-1">
-                        <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                          <Droplets className="w-4 h-4 text-white" />
-                        </div>
-                        <span className="font-bold text-lg">{setAmount.toFixed(1)}</span>
-                      </div>
-                      <button
-                        type="button"
-                        aria-label="Increase time"
-                        onClick={() => setSetAmount(setAmount + 0.1)}
-                        className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm">SET TIME</span>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1">
-                        <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                          <span className="text-xs">J</span>
-                        </div>
-                        <div className="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
-                          <span className="text-xs">⚡</span>
-                        </div>
-                      </div>
-                      <span className="font-bold text-lg">{setTime}s</span>
-                      <button
-                        type="button"
-                        aria-label="Increase time"
-                        onClick={() => setSetTime(setTime + 10)}
-                        className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-
-            <div className="space-y-3">
-              <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold">
-                LOCK HORNS
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full bg-slate-700 border-slate-600 text-white hover:bg-slate-600 py-3 rounded-lg"
-                onClick={() => setShowLockHornsModal(false)}
-              >
-                CANCEL
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <LockHornsModal
+        isOpen={showLockHornsModal}
+        onClose={() => {
+          setShowLockHornsModal(false)
+          setSelectedToken(null)
+        }}
+      />
     </div>
   )
 }
