@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Home, Users, Zap, Trophy, User, Signal, Wifi, Battery, Plus, Minus, Gamepad2, Droplets } from "lucide-react"
+import { Home, Users, Zap, Trophy, User, Plus, Minus, Gamepad2, Droplets } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 
@@ -32,7 +32,7 @@ export default function FanpoolApp() {
       case "SCLP":
         return (
           <div className="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center">
-            <div className="w-6 h-6 bg-gray-300 rounded-full border-2 border-gray-500"></div>
+            <div className="w-6 h-6 bg-gray-300 rounded-full border-2 border-gray-500"> <img src="/images/b.png" alt="Sclp" /> </div>
           </div>
         )
       case "CETUS":
@@ -50,13 +50,13 @@ export default function FanpoolApp() {
       case "HIPPO":
         return (
           <div className="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center">
-            <div className="text-white text-lg">🦛</div>
+            <div className="text-white text-lg"> <img src="/images/a.png" alt="Hippo" /> </div>
           </div>
         )
       case "LOFI":
         return (
           <div className="w-10 h-10 bg-blue-300 rounded-full flex items-center justify-center">
-            <div className="w-6 h-6 bg-blue-600 rounded-sm"></div>
+            <div className="w-6 h-6 bg-blue-600 rounded-sm"> <img src="/images/c.png" alt="Lofi" /> </div>
           </div>
         )
       case "SSWP":
@@ -82,15 +82,6 @@ export default function FanpoolApp() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      {/* Status Bar */}
-      <div className="flex justify-between items-center px-4 py-2 text-sm">
-        <span>4:20</span>
-        <div className="flex items-center gap-1">
-          <Signal className="w-4 h-4" />
-          <Wifi className="w-4 h-4" />
-          <Battery className="w-4 h-4" />
-        </div>
-      </div>
 
       {/* Header */}
       <div className="flex justify-between items-center px-4 py-3">
@@ -126,22 +117,19 @@ export default function FanpoolApp() {
           </Button>
         </div>
 
-        {/* Curved SUI Banner with Token Grid */}
         <div className="relative mb-6">
           {/* Curved Blue Banner */}
-          <div className="bg-blue-600 rounded-t-2xl p-3 flex justify-between items-center relative z-10">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="flex items-center gap-1 text-white">
-                <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                  <Droplets className="w-4 h-4" />
-                </div>
-                <span className="font-semibold">$SUI</span>
-              </div>
-            ))}
+          <div className="relative w-full h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] mb-6">
+          <img
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/images/Sui.png"
+          alt="Curved Blue Banner"
+          />
           </div>
 
-          {/* Green Token Grid with Vertical Stripes - Fully Rounded */}
-          <div className="relative bg-gradient-to-b from-green-400 to-green-600 rounded-2xl p-6 pt-2">
+          {/* Green Token Grid with Vertical Stripes - Top Rounded */}
+          <div className="relative bg-gradient-to-b from-[#207400] to-[#1f6d00] p-6 mt-[-4vh]">
+          <div className="bg-[#005094] h-5 w-5 ml-[-20vw]"></div>
             {/* Vertical Stripes */}
             <div className="absolute inset-0 flex rounded-2xl overflow-hidden">
               {Array.from({ length: 8 }).map((_, i) => (
@@ -184,19 +172,19 @@ export default function FanpoolApp() {
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-3">YOUR BULLZ</h3>
           <div className="flex gap-3">
-            <div className="bg-slate-800 rounded-lg p-4 flex-1">
+            <div className="bg-slate-800 rounded-lg p-2 flex-1">
               <div className="text-orange-500 mb-2">🐂</div>
               <div className="text-sm">FIGHTERS</div>
               <div className="text-xs text-gray-400">18W 4L</div>
               <div className="text-xs">|||</div>
             </div>
-            <div className="bg-slate-800 rounded-lg p-4 flex-1">
+            <div className="bg-slate-800 rounded-lg p-2 flex-1">
               <div className="text-orange-500 mb-2">🐂</div>
               <div className="text-sm">NIRVANA KL</div>
               <div className="text-xs text-gray-400">0W 0L</div>
               <div className="text-xs">||||</div>
             </div>
-            <div className="bg-slate-700 rounded-lg p-4 flex-1 flex items-center justify-center border-2 border-dashed border-gray-600">
+            <div className="bg-slate-700 rounded-lg p-2 flex-1 flex items-center justify-center border-2 border-dashed border-gray-600">
               <Plus className="w-8 h-8 text-gray-400" />
             </div>
           </div>
@@ -276,6 +264,8 @@ export default function FanpoolApp() {
                     <span className="text-sm">SET TIME</span>
                     <div className="flex items-center gap-3">
                       <button
+                        type="button"
+                        aria-label="Decrease time"
                         onClick={() => setSetTime(Math.max(10, setTime - 10))}
                         className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
                       >
@@ -283,6 +273,8 @@ export default function FanpoolApp() {
                       </button>
                       <span className="font-bold text-lg">{setTime}s</span>
                       <button
+                        type="button"
+                        aria-label="Increase time"
                         onClick={() => setSetTime(setTime + 10)}
                         className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
                       >
@@ -303,6 +295,8 @@ export default function FanpoolApp() {
                     <span className="text-sm">SET AMOUNT</span>
                     <div className="flex items-center gap-3">
                       <button
+                        type="button"
+                        aria-label="Decrease time"
                         onClick={() => setSetAmount(Math.max(0.1, setAmount - 0.1))}
                         className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
                       >
@@ -315,6 +309,8 @@ export default function FanpoolApp() {
                         <span className="font-bold text-lg">{setAmount.toFixed(1)}</span>
                       </div>
                       <button
+                        type="button"
+                        aria-label="Increase time"
                         onClick={() => setSetAmount(setAmount + 0.1)}
                         className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
                       >
@@ -338,6 +334,8 @@ export default function FanpoolApp() {
                       </div>
                       <span className="font-bold text-lg">{setTime}s</span>
                       <button
+                        type="button"
+                        aria-label="Increase time"
                         onClick={() => setSetTime(setTime + 10)}
                         className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center"
                       >
