@@ -22,6 +22,14 @@ export default function FanpoolApp() {
     { name: "SUI", multiplier: "1.1x", change: "+0.91", color: "bg-blue-500", hasImage: false },
   ]
 
+  const tokenRows = [
+  [tokens[0]],           
+  [tokens[1], tokens[2]],
+  [tokens[3]],           
+  [tokens[4], tokens[5]],
+  [tokens[6]],          
+];
+
   const handleTokenClick = (tokenName: string) => {
     setShowLockHornsModal(true)
     setModalType("free-run")
@@ -119,7 +127,7 @@ export default function FanpoolApp() {
 
         <div className="relative mb-6">
           {/* Curved Blue Banner */}
-          <div className="relative w-full h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] mb-6">
+          <div className="relative w-full h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] md:w-full mb-6">
           <img
           className="absolute inset-0 w-full h-full object-cover"
           src="/images/Sui.png"
@@ -128,43 +136,46 @@ export default function FanpoolApp() {
           </div>
 
           {/* Green Token Grid with Vertical Stripes - Top Rounded */}
-          <div className="relative bg-gradient-to-b from-[#207400] to-[#1f6d00] p-6 mt-[-4vh]">
-          <div className="bg-[#005094] h-5 w-5 ml-[-20vw]"></div>
+          <div className="relative bg-gradient-to-b from-[#207400] to-[#1f6d00] p-6 mt-[-5vh] h-[45vh] rounded-top-[20px]">
             {/* Vertical Stripes */}
             <div className="absolute inset-0 flex rounded-2xl overflow-hidden">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className={`flex-1 ${i % 2 === 0 ? "bg-green-300/30" : "bg-green-700/30"}`} />
+                <div key={i} className={`flex-1 ${i % 2 === 0 ? "bg-[#227900]" : "bg-[#1f6f00]"}`} />
               ))}
             </div>
 
             {/* Token Grid */}
-            <div className="grid grid-cols-3 gap-4 relative z-10 pt-4">
-              {tokens.map((token, index) => (
-                <div
-                  key={token.name}
-                  className="relative flex flex-col items-center cursor-pointer"
-                  onClick={() => handleTokenClick(token.name)}
-                >
-                  {/* Change indicator */}
-                  <div className="absolute -top-2 -left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full z-20">
-                    {token.change}
-                  </div>
-
-                  {/* Multiplier */}
-                  <div className="absolute -top-2 -right-2 bg-black text-white text-xs px-2 py-1 rounded-full z-20">
-                    {token.multiplier}
-                  </div>
-
-                  {/* Token Circle with Icon */}
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-2 border-4 border-white shadow-lg relative z-10">
-                    {renderTokenIcon(token)}
-                  </div>
-
-                  {/* Token Name */}
-                  <span className="text-xs font-bold text-white mt-1">{token.name}</span>
-                </div>
-              ))}
-            </div>
+            <div className="space-y-2 relative z-10 pt-2">
+  {tokenRows.map((row, rowIdx) => (
+    <div
+      key={rowIdx}
+      className={`flex ${row.length === 2 ? "justify-between" : "justify-center"} w-full`}
+    >
+      {row.map((token, colIdx) => (
+        <div
+          key={token.name}
+          className="relative flex flex-col items-center cursor-pointer"
+          onClick={() => handleTokenClick(token.name)}
+        >
+          {/* Change indicator */}
+          <div className="absolute -top-2 -left-2 bg-[#cf0000] text-white text-xs px-2 py-1 rounded-full z-20">
+            {token.change}
+          </div>
+          {/* Multiplier */}
+          <div className="absolute -top-2 -right-2 bg-black text-white text-xs px-2 py-1 rounded-full z-20">
+            {token.multiplier}
+          </div>
+          {/* Token Circle with Icon */}
+          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2 border-4 border-white shadow-lg relative z-10">
+            {renderTokenIcon(token)}
+          </div>
+          {/* Token Name */}
+          <span className="text-xs font-bold text-white mt-1">{token.name}</span>
+        </div>
+      ))}
+    </div>
+  ))}
+</div>
           </div>
         </div>
 
