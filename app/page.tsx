@@ -137,7 +137,7 @@ export default function TradingDashboard() {
           {/* Curved Blue Banner */}
           <div className="relative w-screen h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] mb-6">
             <img
-              className="absolute inset-0 w-screen h-full object-contain"
+              className="absolute inset-0 w-screen h-full object-cover"
               src="/images/Sui.png"
               alt="Curved Blue Banner"
             />
