@@ -96,20 +96,6 @@ export default function TradingDashboard() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
-      {/* Status Bar */}
-      <div className="flex justify-between items-center px-4 py-2 text-sm">
-        <span className="font-medium">4:20</span>
-        <div className="flex items-center space-x-1">
-          <div className="flex space-x-1">
-            <div className="w-1 h-3 bg-white rounded-sm"></div>
-            <div className="w-1 h-3 bg-white rounded-sm"></div>
-            <div className="w-1 h-3 bg-white rounded-sm"></div>
-            <div className="w-1 h-3 bg-gray-500 rounded-sm"></div>
-          </div>
-          <span className="ml-2">📶</span>
-          <span>🔋</span>
-        </div>
-      </div>
 
       {/* Header */}
       <div className="flex justify-between items-center px-4 py-3">
@@ -147,11 +133,11 @@ export default function TradingDashboard() {
         </div>
 
         {/* Full Width Blue SUI Section */}
-        <div className="relative mb-0 w-screen -mx-4">
+        <div className="relative mb-0 w-screen">
           {/* Curved Blue Banner */}
-          <div className="relative w-full h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] mb-6">
+          <div className="relative w-screen h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] mb-6">
             <img
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-screen h-full object-contain"
               src="/images/Sui.png"
               alt="Curved Blue Banner"
             />
@@ -161,20 +147,19 @@ export default function TradingDashboard() {
 
 {/* Full Width Green Section with Token Grid */}
 <div 
-  className="relative bg-gradient-to-b from-green-600 to-green-700 overflow-hidden w-screen"
+  className="relative bg-gradient-to-b from-[#1b6200] to-[#258200] overflow-hidden w-screen rounded-top-[40px]"
   style={{
-    borderRadius: '60px 60px 0 0',
-    marginTop: '-40px',
+    marginTop: '-55px',
     height: '45vh',
     paddingTop: '50px'
   }}
 >
   {/* Vertical Stripes Background */}
-  <div className="absolute inset-0 flex w-full" style={{ borderRadius: '60px 60px 0 0' }}>
+  <div className="absolute inset-0 flex w-full" style={{ borderRadius: '50px 50px 0 0' }}>
     {Array.from({ length: 12 }).map((_, i) => (
       <div 
         key={i} 
-        className={`flex-1 ${i % 2 === 0 ? 'bg-green-500/30' : 'bg-green-800/30'}`} 
+        className={`flex-1 ${i % 2 === 0 ? 'bg-[#217600]' : 'bg-[#1f6e00]'}`} 
       />
     ))}
   </div>
@@ -190,7 +175,7 @@ export default function TradingDashboard() {
           <div
             key={token.symbol}
             onClick={() => handleTokenClick(token.symbol)}
-            className="cursor-pointer relative flex flex-col items-center"
+            className={`cursor-pointer relative flex flex-col items-center ${row.length === 2 ? "mt-[-1vh] ml-[5vw]" : ""}`}
           >
             {/* Change Badge */}
             <div className="absolute -top-2 -left-3 z-20">
