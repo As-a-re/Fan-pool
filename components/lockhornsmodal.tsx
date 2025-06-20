@@ -14,6 +14,20 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
   const [time, setTime] = useState(60);
 
   if (!isOpen) return null;
+  
+  // Color styles
+  const styles = {
+    orange: 'bg-[#FF6B35] hover:bg-[#E55F2F]',
+    darkBlue: 'bg-[#1A365D]',
+    darkGray: 'bg-[#2D3748]',
+    lightGray: 'bg-[#4A5568]',
+    text: 'text-white',
+    border: 'border border-[#4A5568]',
+    cardBg: 'bg-[#1E1E2D]',
+    headerBg: 'bg-[#252538]',
+    buttonHover: 'hover:bg-[#3A3A4D]',
+    buttonActive: 'active:bg-[#2D2D3D]'
+  };
 
   const incrementAmount = () => setAmount(prev => Math.round((prev + 0.1) * 10) / 10);
   const decrementAmount = () => setAmount(prev => Math.max(0.1, Math.round((prev - 0.1) * 10) / 10));
@@ -21,11 +35,17 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
   const decrementTime = () => setTime(prev => Math.max(10, prev - 10));
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-game-card rounded-2xl w-full max-w-sm mx-auto border border-gray-700 overflow-hidden">
+    <div className="w-full h-full overflow-y-auto">
+      <div className={`${styles.cardBg} w-full h-full border-t-4 border-orange-500 overflow-y-auto`}>
         {/* Header */}
-        <div className="text-center py-6 border-b border-gray-700">
-          <div className="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-3">
+        <div className="sticky top-0 z-10 text-center py-4 border-b border-gray-700 bg-[#1E1E2D]">
+          <button 
+            onClick={onClose}
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <div className={`w-12 h-12 ${styles.darkBlue} rounded-full flex items-center justify-center mx-auto mb-3`}>
             <Gamepad2 className="w-6 h-6 text-white" />
           </div>
           <h2 className="text-xl font-bold text-white">LOCK HORNS</h2>
@@ -38,8 +58,8 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
               onClick={() => setSelectedMode('BULL-RUN')}
               className={`flex-1 py-3 text-sm font-bold rounded-l-lg transition-all duration-300 ${
                 selectedMode === 'BULL-RUN' 
-                  ? 'bg-game-dark-blue text-white' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  ? `${styles.darkBlue} text-white` 
+                  : `${styles.darkGray} text-gray-300 ${styles.buttonHover}`
               }`}
             >
               BULL-RUN
@@ -48,8 +68,8 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
               onClick={() => setSelectedMode('FREE-RUN')}
               className={`flex-1 py-3 text-sm font-bold rounded-r-lg transition-all duration-300 ${
                 selectedMode === 'FREE-RUN' 
-                  ? 'bg-game-dark-blue text-white' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  ? `${styles.darkBlue} text-white` 
+                  : `${styles.darkGray} text-gray-300 ${styles.buttonHover}`
               }`}
             >
               FREE-RUN
@@ -85,9 +105,9 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
               <div className="flex items-center justify-center space-x-4">
                 <button
                   type="button"
-                  aria-label="Decrease time"
+                  aria-label="Decrease amount"
                   onClick={decrementAmount}
-                  className="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors duration-300"
+                  className={`w-10 h-10 ${styles.darkGray} ${styles.buttonHover} rounded-full flex items-center justify-center transition-colors duration-300`}
                 >
                   <Minus className="w-4 h-4 text-white" />
                 </button>
@@ -99,9 +119,9 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
                 </div>
                 <button
                   type="button"
-                  aria-label="Increase time"
+                  aria-label="Increase amount"
                   onClick={incrementAmount}
-                  className="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors duration-300"
+                  className={`w-10 h-10 ${styles.darkGray} ${styles.buttonHover} rounded-full flex items-center justify-center transition-colors duration-300`}
                 >
                   <Plus className="w-4 h-4 text-white" />
                 </button>
@@ -119,7 +139,7 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
                 type="button"
                 aria-label="Decrease time"
                 onClick={decrementTime}
-                className="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors duration-300"
+                className={`w-10 h-10 ${styles.darkGray} ${styles.buttonHover} rounded-full flex items-center justify-center transition-colors duration-300`}
               >
                 <Minus className="w-4 h-4 text-white" />
               </button>
@@ -137,7 +157,7 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
                 type="button"
                 aria-label="Increase time"
                 onClick={incrementTime}
-                className="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors duration-300"
+                className={`w-10 h-10 ${styles.darkGray} ${styles.buttonHover} rounded-full flex items-center justify-center transition-colors duration-300`}
               >
                 <Plus className="w-4 h-4 text-white" />
               </button>
@@ -145,13 +165,15 @@ const LockHornsModal: React.FC<LockHornsModalProps> = ({ isOpen, onClose }) => {
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-3">
-            <button className="w-full bg-game-orange hover:bg-orange-600 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 active:scale-95">
+          <div className="sticky bottom-0 left-0 right-0 p-4 space-y-3 bg-[#1E1E2D] border-t border-gray-700">
+            <button 
+              className={`w-full ${styles.orange} text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 active:scale-95`}
+            >
               LOCK HORNS
             </button>
             <button 
               onClick={onClose}
-              className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-xl font-bold transition-all duration-300"
+              className={`w-full ${styles.darkGray} ${styles.buttonHover} text-white py-3 rounded-xl font-bold transition-all duration-300`}
             >
               CANCEL
             </button>

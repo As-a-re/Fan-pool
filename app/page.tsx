@@ -8,6 +8,8 @@ import TokenCard from '@/components/tokencard'
 import LockHornsModal from '@/components/lockhornsmodal'
 
 export default function TradingDashboard() {
+  // State and other logic remains the same
+  
   const [showLockHornsModal, setShowLockHornsModal] = useState(false)
   const [modalType, setModalType] = useState<"free-run" | "bull-run">("free-run")
   const [selectedTab, setSelectedTab] = useState<"BULL-RUN" | "FREE-RUN">("BULL-RUN")
@@ -95,8 +97,11 @@ export default function TradingDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
-
+    <div className={`min-h-screen bg-slate-900 text-white overflow-x-hidden ${showLockHornsModal ? 'overflow-y-hidden' : ''}`}>
+      {/* Blur overlay when modal is open */}
+      {showLockHornsModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"></div>
+      )}
       {/* Header */}
       <div className="flex justify-between items-center px-4 py-3">
         <div className="flex items-center gap-2">
@@ -133,79 +138,77 @@ export default function TradingDashboard() {
         </div>
 
         {/* Full Width Blue SUI Section */}
-        <div className="relative mb-0 w-screen">
+        <div className="relative mb-0 w-screen z-0">
           {/* Curved Blue Banner */}
-          <div className="relative w-screen h-20 md:h-32 overflow-hidden rounded-t-[30px] md:rounded-t-[50px] mb-6">
+          <div className="relative w-screen h-18 md:h-18 overflow-hidden mb-6">
             <img
-              className="absolute inset-0 w-screen h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
               src="/images/Sui.png"
               alt="Curved Blue Banner"
             />
           </div>
+        </div>
 
-        // ...existing code...
-
-{/* Full Width Green Section with Token Grid */}
-<div 
-  className="relative bg-gradient-to-b from-[#1b6200] to-[#258200] overflow-hidden w-screen rounded-top-[40px]"
-  style={{
-    marginTop: '-55px',
-    height: '45vh',
-    paddingTop: '50px'
-  }}
->
-  {/* Vertical Stripes Background */}
-  <div className="absolute inset-0 flex w-full" style={{ borderRadius: '50px 50px 0 0' }}>
-    {Array.from({ length: 12 }).map((_, i) => (
-      <div 
-        key={i} 
-        className={`flex-1 ${i % 2 === 0 ? 'bg-[#217600]' : 'bg-[#1f6e00]'}`} 
-      />
-    ))}
-  </div>
-
-  {/* Token Grid - Only this section blurs */}
-  <div className={`relative z-10 px-8 h-full flex flex-col justify-center space-y-4 transition-all duration-300 ${showLockHornsModal ? "blur-sm pointer-events-none" : ""}`}>
-    {tokenRows.map((row, rowIdx) => (
-      <div
-        key={rowIdx}
-        className={`flex ${row.length === 2 ? "justify-center gap-16" : "justify-center"} items-center`}
-      >
-        {row.map((token) => (
-          <div
-            key={token.symbol}
-            onClick={() => handleTokenClick(token.symbol)}
-            className={`cursor-pointer relative flex flex-col items-center ${row.length === 2 ? "mt-[-1vh] ml-[5vw]" : ""}`}
-          >
-            {/* Change Badge */}
-            <div className="absolute -top-2 -left-3 z-20">
-              <span className="text-xs bg-red-600 text-white px-1.5 py-0.5 rounded-full">
-                {token.change}
-              </span>
-            </div>
-            {/* Multiplier Badge */}
-            <div className="absolute -top-2 -right-3 z-20">
-              <span className="text-xs bg-black text-white px-1.5 py-0.5 rounded-full">
-                {token.multiplier}
-              </span>
-            </div>
-            {/* Token Icon Circle */}
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-2 relative z-10 shadow-lg">
-              <div className={`w-12 h-12 ${token.bgColor} rounded-full flex items-center justify-center`}>
-                {renderTokenIcon(token)}
-              </div>
-            </div>
-            {/* Token Symbol */}
-            <span className="text-xs font-bold text-white">{token.symbol}</span>
+        {/* Full Width Green Section with Token Grid */}
+        <div 
+          className="relative bg-gradient-to-b from-[#1b6200] to-[#258200] overflow-hidden w-screen rounded-top-[40px]"
+          style={{
+            marginTop: '0vh',
+            height: '45vh',
+            paddingTop: '50px'
+          }}
+        >
+          {/* Vertical Stripes Background */}
+          <div className="absolute inset-0 flex w-full" style={{ borderRadius: '50px 50px 0 0' }}>
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div 
+                key={i} 
+                className={`flex-1 ${i % 2 === 0 ? 'bg-[#217600]' : 'bg-[#1f6e00]'}`} 
+              />
+            ))}
           </div>
-        ))}
-      </div>
-    ))}
-  </div>
-</div>      </div>
+
+          {/* Token Grid */}
+          <div className={`relative z-10 h-full flex flex-col justify-center transition-all duration-300 ${showLockHornsModal}`}>
+            <div className="flex-1 flex flex-col justify-evenly py-4">
+              {tokenRows.map((row, rowIdx) => (
+                <div key={rowIdx} className="flex justify-center items-center w-full">
+                  {row.map((token) => (
+                    <div
+                      key={token.symbol}
+                      onClick={() => handleTokenClick(token.symbol)}
+                      className="cursor-pointer relative flex flex-col items-center mx-1 sm:mx-2 md:mx-4"
+                    >
+                      {/* Change Badge */}
+                      <div className="absolute -top-2 -left-3 z-20">
+                        <span className="text-xs bg-red-600 text-white px-1.5 py-0.5 rounded-full">
+                          {token.change}
+                        </span>
+                      </div>
+                      {/* Multiplier Badge */}
+                      <div className="absolute -top-2 -right-3 z-20">
+                        <span className="text-xs bg-black text-white px-1.5 py-0.5 rounded-full">
+                          {token.multiplier}
+                        </span>
+                      </div>
+                      {/* Token Icon Circle */}
+                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-2 relative z-10 shadow-lg">
+                        <div className={`w-12 h-12 ${token.bgColor} rounded-full flex items-center justify-center`}>
+                          {renderTokenIcon(token)}
+                        </div>
+                      </div>
+                      {/* Token Symbol */}
+                      <span className="text-xs font-bold text-white">{token.symbol}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Your Bullz Section - Positioned closer to bottom */}
+      {/* Your Bullz Section */}
       <div className="px-4 mb-20">
         <h3 className="text-sm font-bold text-gray-400 mb-3">YOUR BULLZ</h3>
         <div className="flex space-x-3">
@@ -254,13 +257,17 @@ export default function TradingDashboard() {
       </div>
 
       {/* Lock Horns Modal */}
-      <LockHornsModal 
-        isOpen={showLockHornsModal} 
-        onClose={() => {
-          setShowLockHornsModal(false);
-          setSelectedToken(null);
-        }} 
-      />
+      <div className={`fixed inset-0 z-50 flex items-end transition-all duration-300 ${showLockHornsModal ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className={`w-full h-1/2 transform transition-transform duration-300 ${showLockHornsModal ? 'translate-y-0' : 'translate-y-full'}`}>
+          <LockHornsModal 
+            isOpen={showLockHornsModal} 
+            onClose={() => {
+              setShowLockHornsModal(false);
+              setSelectedToken(null);
+            }} 
+          />
+        </div>
+      </div>
     </div>
   );
 }
