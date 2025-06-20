@@ -140,7 +140,7 @@ export default function TradingDashboard() {
         {/* Full Width Blue SUI Section */}
         <div className="relative mb-0 w-screen z-0">
           {/* Curved Blue Banner */}
-          <div className="relative w-screen h-18 md:h-18 overflow-hidden mb-6">
+          <div className="relative w-screen h-18 md:h-18 overflow-hidden">
             <img
               className="absolute inset-0 w-full h-full object-cover"
               src="/images/Sui.png"
@@ -154,7 +154,7 @@ export default function TradingDashboard() {
           className="relative bg-gradient-to-b from-[#1b6200] to-[#258200] overflow-hidden w-screen rounded-top-[40px]"
           style={{
             marginTop: '0vh',
-            height: '45vh',
+            height: '55vh',
             paddingTop: '50px'
           }}
         >
@@ -169,7 +169,7 @@ export default function TradingDashboard() {
           </div>
 
           {/* Token Grid */}
-          <div className={`relative z-10 h-full flex flex-col justify-center transition-all duration-300 ${showLockHornsModal}`}>
+          <div className="relative z-10 h-full flex flex-col justify-center">
             <div className="flex-1 flex flex-col justify-evenly py-4">
               {tokenRows.map((row, rowIdx) => (
                 <div key={rowIdx} className="flex justify-center items-center w-full">
@@ -177,7 +177,7 @@ export default function TradingDashboard() {
                     <div
                       key={token.symbol}
                       onClick={() => handleTokenClick(token.symbol)}
-                      className="cursor-pointer relative flex flex-col items-center mx-1 sm:mx-2 md:mx-4"
+                      className="cursor-pointer relative flex flex-col items-center mx-[20vw] mt-[-2vh]"
                     >
                       {/* Change Badge */}
                       <div className="absolute -top-2 -left-3 z-20">
