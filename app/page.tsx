@@ -137,72 +137,72 @@ export default function TradingDashboard() {
           </Button>
         </div>
 
-        {/* Full Width Blue SUI Section */}
-        <div className="relative mb-0 w-screen z-0">
-          {/* Curved Blue Banner */}
-          <div className="relative w-screen h-18 md:h-18 overflow-hidden">
-            <img
-              className="absolute inset-0 w-full h-full object-cover"
-              src="/images/Sui.png"
-              alt="Curved Blue Banner"
+        {/* Full Width Green Section with Token Grid */}
+        <div className="relative">
+          {/* SUI Image Overlay */}
+          <div className="absolute top-0 left-0 w-screen z-10" style={{ marginTop: '-3.5vh' }}>
+            <img 
+              src="/images/Sui.png" 
+              alt="SUI Banner" 
+              className="w-screen h-20 object-cover object-center"
             />
           </div>
-        </div>
-
-        {/* Full Width Green Section with Token Grid */}
-        <div 
-          className="relative bg-gradient-to-b from-[#1b6200] to-[#258200] overflow-hidden w-screen rounded-top-[40px]"
-          style={{
-            marginTop: '0vh',
-            height: '55vh',
-            paddingTop: '50px'
-          }}
-        >
-          {/* Vertical Stripes Background */}
-          <div className="absolute inset-0 flex w-full" style={{ borderRadius: '50px 50px 0 0' }}>
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div 
-                key={i} 
-                className={`flex-1 ${i % 2 === 0 ? 'bg-[#217600]' : 'bg-[#1f6e00]'}`} 
-              />
-            ))}
-          </div>
-
-          {/* Token Grid */}
-          <div className="relative z-10 h-full flex flex-col justify-center">
-            <div className="flex-1 flex flex-col justify-evenly py-4">
-              {tokenRows.map((row, rowIdx) => (
-                <div key={rowIdx} className="flex justify-center items-center w-full">
-                  {row.map((token) => (
-                    <div
-                      key={token.symbol}
-                      onClick={() => handleTokenClick(token.symbol)}
-                      className="cursor-pointer relative flex flex-col items-center mx-[20vw] mt-[-2vh]"
-                    >
-                      {/* Change Badge */}
-                      <div className="absolute -top-2 -left-3 z-20">
-                        <span className="text-xs bg-red-600 text-white px-1.5 py-0.5 rounded-full">
-                          {token.change}
-                        </span>
-                      </div>
-                      {/* Multiplier Badge */}
-                      <div className="absolute -top-2 -right-3 z-20">
-                        <span className="text-xs bg-black text-white px-1.5 py-0.5 rounded-full">
-                          {token.multiplier}
-                        </span>
-                      </div>
-                      {/* Token Icon Circle */}
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-2 relative z-10 shadow-lg">
-                        <div className={`w-12 h-12 ${token.bgColor} rounded-full flex items-center justify-center`}>
-                          {renderTokenIcon(token)}
-                        </div>
-                      </div>
-                      {/* Token Symbol */}
-                      <span className="text-xs font-bold text-white">{token.symbol}</span>
-                    </div>
-                  ))}
-                </div>
+          
+          {/* Green Section */}
+          <div 
+            className="relative bg-gradient-to-b from-[#1b6200] to-[#258200] overflow-hidden w-screen rounded-top-[40px]"
+            style={{
+              paddingTop: '60px',
+              height: '55vh',
+              marginTop: '2vh'
+            }}
+          >
+            {/* Vertical Stripes Background */}
+            <div className="absolute inset-0 flex w-full" style={{ borderRadius: '50px 50px 0 0' }}>
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div 
+                  key={i} 
+                  className={`flex-1 ${i % 2 === 0 ? 'bg-[#217600]' : 'bg-[#1f6e00]'}`} 
+                />
               ))}
+            </div>
+
+            {/* Token Grid */}
+            <div className="relative z-10 h-full flex flex-col justify-center">
+              <div className="flex-1 flex flex-col justify-evenly py-4">
+                {tokenRows.map((row, rowIdx) => (
+                  <div key={rowIdx} className="flex justify-center items-center w-full">
+                    {row.map((token) => (
+                      <div
+                        key={token.symbol}
+                        onClick={() => handleTokenClick(token.symbol)}
+                        className="cursor-pointer relative flex flex-col items-center mx-[20vw] mt-[-2vh]"
+                      >
+                        {/* Change Badge */}
+                        <div className="absolute -top-2 -left-3 z-20">
+                          <span className="text-xs bg-red-600 text-white px-1.5 py-0.5 rounded-full">
+                            {token.change}
+                          </span>
+                        </div>
+                        {/* Multiplier Badge */}
+                        <div className="absolute -top-2 -right-3 z-20">
+                          <span className="text-xs bg-black text-white px-1.5 py-0.5 rounded-full">
+                            {token.multiplier}
+                          </span>
+                        </div>
+                        {/* Token Icon Circle */}
+                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-2 relative z-10 shadow-lg">
+                          <div className={`w-12 h-12 ${token.bgColor} rounded-full flex items-center justify-center`}>
+                            {renderTokenIcon(token)}
+                          </div>
+                        </div>
+                        {/* Token Symbol */}
+                        <span className="text-xs font-bold text-white">{token.symbol}</span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
